@@ -1,0 +1,53 @@
+{% extends 'home.html' %}
+{% block title %}Posts{% endblock %}
+{% block content %}
+<section id="portfolio" class="portfolio">
+
+    <div class="container" data-aos="fade-up">
+
+      <header class="section-header">
+        <h2>Posts</h2>
+        <p>Check your latest posts</p>
+        {% if group == 'Company'%}
+        <div style="float:center; padding-top: 22px;"><a type="button" href="{% url 'createPost' %}" class="btn btn-primary" ><i class="bi bi-plus"></i>Add post</a></div>              
+        {% endif %}
+      </header>
+
+      <div class="row" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <ul id="portfolio-flters">
+            <li data-filter="*" class="filter-active">All</li>
+            {% for c in categories %}
+            <li data-filter=".filter-{{c.name}}">{{c.name}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+        {% for post in posts %}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-{{post.product.category}}">
+          <div class="portfolio-wrap">
+            <img src="{{ post.image.url }}" class="img-fluid">
+            <div class="portfolio-info">
+              <h4>{{post.name}}</h4>
+              <p>{{post.description}}</p>
+              <div class="portfolio-links">
+                {% if group == 'Creator' %}
+                <a href="{% url 'productTry' pk=post.product.ref %}" title="More Details"><i class="bi bi-link"></i></a>
+                <a href="{{ post.image.url }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="{{post.description}}"><i class="bi bi-plus"></i></a>
+                {% else %}
+                <a href="{{ post.image.url }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="{{post.description}}"><i class="bi bi-plus"></i></a>
+                <a href="{% url 'product' pk=post.product.ref %}" title="More Details"><i class="bi bi-link"></i></a>
+                <a href="{% url 'updatePost' pk=post.id %}" title="Edit"><i class="bi bi-pen"></i></a>
+                <a href="{% url 'deletePost' pk=post.id %}" title="Delete"><i class="bi bi-trash"></i></a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

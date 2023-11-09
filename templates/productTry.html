@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+{% block title %}ProductTry{% endblock %}
+{% block content %}
+<section id="portfolio-details" class="portfolio-details">
+
+    <header class="section-header" data-aos="fade-up">
+        <h2>Product</h2>
+        <p>Check the product details</p>
+    </header><br>
+
+    <div class="container" data-aos="fade-up">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-8">
+          <div class="portfolio-details-slider swiper">
+            <div class="swiper-wrapper align-items-center">
+
+              <div class="swiper-slide">
+                <img src="{{ product.image.url }}" alt="">
+              </div>
+
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="portfolio-info">
+            <h3>Product information</h3>
+            <ul>
+              <li><strong>Name</strong>: {{ product.name }}</li>
+              <li><strong>Category</strong>: {{ product.category }}</li>
+              <li><strong>Company</strong>: <a href="{% url 'profile' %}" >{{ product.user.username }} </a></li>
+              <li><strong>Release date</strong>: {{ product.release_date }}</li>
+              <li><strong>Price</strong>: {{ product.price }}</li>
+              <li><strong>Product URL</strong>: <a href="{{ product.product_url }}"> Click here for the official site!</a></li>
+            </ul>
+          </div>
+          <div class="portfolio-description">
+            <h2>About the product</h2>
+            <p>
+                {{ product.about }}
+            </p>
+          </div>                     
+            <form method="POST" action="" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="user" value="{{ request.user.id }}"> 
+              <input type="hidden" name="product" value="{{ product.id }}"> 
+              <input type="hidden" name="status" value="Pending"> 
+              {% if group == 'Creator'%}
+              <div style="float:center;">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-plus"></i> Try</button>
+              </div> 
+              {% endif %}
+              {{ form.errors }}
+            </form> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

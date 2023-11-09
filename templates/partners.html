@@ -1,0 +1,61 @@
+{% extends 'home.html' %}
+{% block title %}Partnerships{% endblock %}
+{% block content %}
+<section id="portfolio" class="portfolio">
+    <header class="section-header" data-aos="fade-up">
+        <h2>Partners</h2>
+        <p>Check your partnerships</p>
+      </header><br>
+    <div class="col-12" data-aos="fade-up">
+        <div class="card recent-sales overflow-auto">
+          <div class="card-body">
+            <h5 class="card-title">Partner <span>| Product</span></h5>
+            <table class="table table-borderless datatable">
+              <thead>
+                <tr>
+                  {% if group == 'Company'%}
+                  <th scope="col">Creator</th>
+                  {% else %}
+                  <th scope="col">Company</th>
+                  {% endif %}
+                  <th scope="col">Product</th>
+                  <th scope="col">Review</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Review</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for partner in partners %}
+                <tr> 
+                  {% if group == 'Company'%}
+                  <td><a href="{% url 'partnerProfile' pk=partner.user %}">{{partner.user}}</a></td>
+                  {% else %}
+                  <td><a href="{% url 'partnerProfile' pk=partner.product.user %}">{{partner.product.user}}</a></td>
+                  {% endif %}
+                  <td><a href="{% url 'product' pk=partner.product.ref %}">{{partner.product}}</a></td>
+                  <td>{{ partner.review.submit }}</td>
+                  {% if partner.status == 'Approved' %}
+                  <td><span class="badge bg-success">{{partner.status}}</span></td>
+                  {% elif partner.status == 'Pending' %}
+                  <td><span class="badge bg-warning">{{partner.status}}</span></td>
+                  {% else %}
+                  <td><span class="badge bg-danger">{{partner.status}}</span></td>
+                  {% endif %}
+                  <td>
+                    {% if group == 'Company'%}
+                    <a type="button" class="btn btn-outline-primary btn-sm"  href="{% url 'updatePartner' pk=partner.id %}">Edit</a>
+                    {% elif group == 'Creator' and partner.status == 'Approved'%}
+                    <a type="button" class="btn btn-outline-secondary btn-sm"  href="{% url 'updateReview' pk=partner.id %}">Review</a>
+                    {% elif group == 'Creator' and  partner.status == 'Approved' %}
+                    <a type="button" class="btn btn-outline-secondary btn-sm"  href="{% url 'updateReview' pk=partner.review.id %}">Review</a>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

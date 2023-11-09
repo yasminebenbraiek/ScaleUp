@@ -1,0 +1,129 @@
+
+{% extends 'home.html' %}
+{% block title %}ProductTry{% endblock %}
+{% block content %}
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+
+        <header class="section-header" data-aos="fade-up">
+            <h2>Product</h2>
+            <p>Check the product details</p>
+        </header><br>
+
+        <div class="container" data-aos="fade-up">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-8">
+              <div class="portfolio-details-slider swiper">
+                <div class="swiper-wrapper align-items-center">
+  
+                  <div class="swiper-slide">
+                    <img src="{{ product.image.url }}" alt="">
+                  </div>
+  
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+  
+            <div class="col-lg-4">
+              <div class="portfolio-info">
+                <h3>Product information</h3>
+                <ul>
+                  <li><strong>Name</strong>: {{ product.name }}</li>
+                  <li><strong>Category</strong>: {{ product.category }}</li>
+                  <li><strong>Company</strong>: <a href="{% url 'partnerProfile' pk=product.user.username %}" >{{ product.user.username }} </a></li>
+                  <li><strong>Release date</strong>: {{ product.release_date }}</li>
+                  <li><strong>Price</strong>: {{ product.price }}</li>
+                  <li><strong>Product URL</strong>: <a href="{{ product.product_url }}"> Click here for the official site!</a></li>
+                </ul>
+              </div>
+              <div class="portfolio-description">
+                <h2>About the product</h2>
+                <p>
+                  {{ product.about }}
+              </p>    
+              </div>
+            </div>
+            
+          </div>
+  
+        </div>
+      </section><!-- End Portfolio Details Section -->
+      {% if seen == True %}
+
+      <!-- Top Selling -->
+      <div class="col-12" data-aos="fade-up">
+        <div class="card top-selling overflow-auto">
+
+          <div class="card-body pb-0">
+            <h5 class="card-title">Reviewers <span>| Partners</span></h5>
+
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th scope="col">Photo</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for partner in partners %}
+                <tr>
+                  <th scope="row"><a href="#"><img src="{{ partner.user.profile.image.url }}" alt="" width="100" height="100"></a></th>
+                  <td><a href="{% url 'partnerProfile' pk=partner.user %}" class="text-primary fw-bold">{{partner.user}}</a></td>
+                  <td>{{partner.user.profile.email}}</td>
+                  <td class="fw-bold">{{partner.user.profile.phone}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </div><!-- End Top Selling -->
+{% if reviews is not None %}
+      <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+
+        <div class="container" data-aos="fade-up">
+  
+          <header class="section-header">
+            <h2>Testimonials</h2>
+            <p>What they are saying about the product</p>
+          </header>
+  
+          <div class="testimonials-slider swiper" data-aos="fade-up">
+            <div class="swiper-wrapper">
+              {% for review in reviews %}
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <div class="stars">
+                    {% for i in ''|center:review.star|make_list %}
+                        <i class="bi bi-star-fill"></i>
+                    {% endfor %}
+                  </div>
+                  <p>
+                    {{review.description}}
+                  </p>
+                  <div class="profile mt-auto">
+                    <h3>{{ review.partner.user.profile.name}}</h3>
+                    <h4>{{ review.partner.user.profile.field}}</h4>
+                  </div>
+                </div>
+              </div><!-- End testimonial item -->
+              {%endfor%}
+{% endif %}
+{% endif %}
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+  
+        </div>
+  
+      </section><!-- End Testimonials Section -->
+
+      {% endblock %}

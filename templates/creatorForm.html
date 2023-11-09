@@ -1,0 +1,96 @@
+{% extends 'home.html' %} 
+{% block title %}Creator{% endblock %} 
+{% block content %}
+<section id="portfolio" class="portfolio">
+  <div class="container" data-aos="fade-up">  
+    <header class="section-header">
+      <h2>Profile</h2>
+      <p>Add and update your info</p>
+    </header><br>    <div class="row">
+      <div class="col-lg-12 mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">My Profile</h5></br>
+              <!-- Profile Edit Form -->
+              <form class="row g-3" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      {{ form.name.label_tag }} {{ form.name }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.about.label_tag }} {{ form.about }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.image.label_tag }} {{ form.image }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.country.label_tag }} {{ form.country }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.field.label_tag }} {{ form.field }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.job.label_tag }} {{ form.job }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.address.label_tag }} {{ form.address }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.birthday.label_tag }} {{ form.birthday }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.phone.label_tag }} {{ form.phone }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.email.label_tag }} {{ form.email }}
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      {{ form.yt.label_tag }} {{ form.yt }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.yt_f.label_tag }} {{ form.yt_f }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.fb.label_tag }} {{ form.fb }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.fb_f.label_tag }} {{ form.fb_f }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.insta.label_tag }} {{ form.insta }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.insta_f.label_tag }} {{ form.insta_f }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.tt.label_tag }} {{ form.tt }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.tt_f.label_tag }} {{ form.tt_f }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.li.label_tag }} {{ form.li }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.li_f.label_tag }} {{ form.li_f }}
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" value="Submit" class="btn btn-primary">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

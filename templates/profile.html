@@ -1,0 +1,259 @@
+{% extends 'home.html' %} 
+{% block title %}profile{% endblock %} 
+{% block content %}
+<section id="portfolio" class="portfolio">
+  <header class="section-header" data-aos="fade-up">
+    <h2>Profile</h2>
+    {% if group == 'Company'%}
+    <p>About Our Business</p>
+    {% else %}
+    <p>About My Content</p>
+    {% endif %}
+  </header>
+  <br />
+
+  <div class="section profile" data-aos="fade-up">
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="card">
+          <div
+            class="card-body profile-card pt-4 d-flex flex-column align-items-center"
+          >
+            <img
+              src="{{ profile.image.url }}"
+              alt="Profile"
+              class="rounded-circle"
+            />
+            <h2>{{ user.username}}</h2>
+            <div class="social-links mt-2">
+              <a href="{{ profile.yt }}" class="youtube"
+                ><i class="bi bi-youtube"></i
+              ></a>
+              <a href="{{ profile.fb }}" class="facebook"
+                ><i class="bi bi-facebook"></i
+              ></a>
+              <a href="{{ profile.insta }}" class="instagram"
+                ><i class="bi bi-instagram"></i
+              ></a>
+              <a href="{{ profile.tt }}" class="tiktok"
+                ><i class="bi bi-tiktok"></i
+              ></a>
+              <a href="{{ profile.li }}" class="linkedin"
+                ><i class="bi bi-linkedin"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button
+                  class="nav-link active"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile-overview"
+                >
+                  Overview
+                </button>
+              </li>
+
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile-stats"
+                >
+                  Stats
+                </button>
+              </li>
+
+            </ul>
+            <div class="tab-content pt-2">
+              <div
+                class="tab-pane fade show active profile-overview"
+                id="profile-overview"
+              >
+                <h5 class="card-title">About</h5>
+                <p class="small fst-italic">{{ profile.about }}</p>
+
+                <h5 class="card-title">Profile Details</h5>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Name</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.name }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Field</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.field }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Country</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.country }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Date</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.date }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Address</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.address }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Phone</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.phone }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Email</div>
+                  <div class="col-lg-9 col-md-8">{{ profile.email }}</div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade pt-3" id="profile-stats">
+                <h5 class="card-title">Followers</h5>
+                <!-- Donut Chart -->
+                <div
+                  id="donutChart"
+                  style="min-height: 400px"
+                  class="echart"
+                ></div>
+
+                <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    echarts.init(document.querySelector("#donutChart")).setOption({
+                      tooltip: {
+                        trigger: 'item'
+                      },
+                      legend: {
+                        top: '5%',
+                        left: 'center'
+                      },
+                      series: [{
+                        name: 'Number of followers in',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                          show: false,
+                          position: 'center'
+                        },
+                        emphasis: {
+                          label: {
+                            show: true,
+                            fontSize: '18',
+                            fontWeight: 'bold'
+                          }
+                        },
+                        labelLine: {
+                          show: false
+                        },
+                        data: [{
+                            value: {{ profile.yt_f }},
+                            name: 'Youtube'
+                          },
+                          {
+                            value: {{ profile.fb_f }},
+                            name: 'Facebook'
+                          },
+                          {
+                            value: {{ profile.insta_f }},
+                            name: 'Instagram'
+                          },
+                          {
+                            value: {{ profile.tt_f }},
+                            name: 'Tiktok'
+                          },
+                          {
+                            value: {{ profile.li_f }},
+                            name: 'LikendIn'
+                          }
+                        ]
+                      }]
+                    });
+                  });
+                </script>
+                <!-- End Donut Chart -->
+
+                {% comment %}
+                <h5 class="card-title">Platform Stats</h5>
+
+                <!-- Pie Chart -->
+                <div
+                  id="pieChart"
+                  style="min-height: 400px"
+                  class="echart"
+                ></div>
+
+                <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    echarts
+                      .init(document.querySelector("#pieChart"))
+                      .setOption({
+                        title: {
+                          text: "Referer for our Website",
+                          subtext: "use it well",
+                          left: "center",
+                        },
+                        tooltip: {
+                          trigger: "item",
+                        },
+                        legend: {
+                          orient: "vertical",
+                          left: "left",
+                        },
+                        series: [
+                          {
+                            name: "Number of",
+                            type: "pie",
+                            radius: "50%",
+                            data: [
+                              {
+                                value: 1048,
+                                name: "Products",
+                              },
+                              {
+                                value: 735,
+                                name: "Partners",
+                              },
+                              {
+                                value: 580,
+                                name: "Reviews",
+                              },
+                              {
+                                value: 484,
+                                name: "Posts",
+                              },
+                            ],
+                            emphasis: {
+                              itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: "rgba(0, 0, 0, 0.5)",
+                              },
+                            },
+                          },
+                        ],
+                      });
+                  });
+                </script>
+                <!-- End Pie Chart -->
+                {% endcomment %}
+              </div>
+            </div>
+            <!-- End Bordered Tabs -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
